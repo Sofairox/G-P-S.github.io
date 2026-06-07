@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastFood GPS - Filtros Rápidos</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="UI.css">
+</head>
+<body>
+
+    <header>
+        <h1>🍔 G-P-S</h1>
+        <p>Encuentra tu antojo más cercano</p>
+    </header>
+
+    <div class="contenedor-filtros">
+        <button class="btn-filtro activo" onclick="filtrarCategoria('todos', this)">🌍 Todos</button>
+        <button class="btn-filtro" onclick="filtrarCategoria('burger', this)">🍔 Hamburguesas</button>
+        <button class="btn-filtro" onclick="filtrarCategoria('pizza', this)">🍕 Pizzas</button>
+        <button class="btn-filtro" onclick="filtrarCategoria('sushi', this)">🍣 Sushi</button>
+        <button class="btn-filtro" onclick="filtrarCategoria('ice_cream', this)">🍦 Helados</button>
+    </div>
+
+    <div id="mapa"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="code.js"></script>
+</body>
+</html>
