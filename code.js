@@ -114,26 +114,38 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // FUNCIÓN GLOBAL PARA FILTRAR AL DAR CLIC EN LOS BOTONES
-    window.filtrarCategoria = function(categoria, botonPresionado) {
-        // Cambiar la clase estética del botón seleccionado
-        document.querySelectorAll('.btn-filtro').forEach(btn => btn.classList.remove('activo'));
-        botonPresionado.classList.add('activo');
+// FUNCIÓN PARA FILTRAR ADAPTADA AL ESPAÑOL
+window.filtrarCategoria = function(categoria, botonPresionado) {
+    // Cambiar la clase estética del botón seleccionado
+    document.querySelectorAll('.btn-filtro').forEach(btn => btn.classList.remove('activo'));
+    botonPresionado.classList.add('activo');
 
-        if (categoria === 'todos') {
-            mostrarLocalesEnMapa(todosLosLocales);
-        } else {
-            // Filtrar usando "includes" o comparando las etiquetas que devuelve OpenStreetMap 
-            // (ej: si el tipo contiene las palabras 'burger', 'pizza', 'sushi' o 'ice_cream')
-            const filtrados = todosLosLocales.filter(local => {
-                const tipoMinuscula = local.tipo.toLowerCase();
-                const nombreMinuscula = local.nombre.toLowerCase();
-                
-                // Buscamos coincidencia tanto en la especialidad como en el nombre del local
-                return tipoMinuscula.includes(categoria) || nombreMinuscula.includes(categoria);
-            });
+    if (categoria === 'todos') {
+        mostrarLocalesEnMapa(todosLosLocales);
+    } else {
+        const filtrados = todosLosLocales.filter(local => {
+            const tipoMinuscula = local.tipo.toLowerCase();
+            const nombreMinuscula = local.nombre.toLowerCase();
             
-            mostrarLocalesEnMapa(filtrados);
-        }
+            // Creamos un diccionario de sinónimos e idiomas
+            let terminosBusqueda = [];
+            
+            if (categoria === 'burger') {
+                terminosBusqueda = ['burger', 'hamburguesa', 'hamburguesería', 'bembos', 'mcdonald', 'burger king'];
+            } else if (categoria === 'pizza') {
+                terminosBusqueda = ['pizza', 'pizzería', 'pizzeria', 'italiana'];
+            } else if (categoria === 'sushi') {
+                terminosBusqueda = ['sushi', 'rolls', 'japonés', 'japonesa', 'handroll'];
+            } else if (categoria === 'ice_cream') {
+                terminosBusqueda = ['ice_cream', 'helado', 'heladería', 'heladeria', 'ice cream'];
+            }
+
+            // Verificamos si alguna de las palabras clave en español o inglés coincide con el local
+            return terminosBusqueda.some(termino => 
+                tipoMinuscula.includes(termino) || nombreMinuscula.includes(termino)
+            );
+        });
+        
+        mostrarLocalesEnMapa(filtrados);
     }
-});
+}
